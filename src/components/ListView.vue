@@ -17,7 +17,6 @@ export default {
 			.then(res => res.json())
 			.then(data => {
 				this.listData = data.data.rows;
-				console.log( data.data.rows );
 			})
 			.catch(error => {
 				console.log( error );
