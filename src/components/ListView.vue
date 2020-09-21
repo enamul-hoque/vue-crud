@@ -1,15 +1,18 @@
 <template>
 	<div class="list-view">
-		<ejs-grid :dataSource="listData"></ejs-grid>
+		<ejs-grid :dataSource="listData" :toolbar='toolbarOptions'></ejs-grid>
 	</div>
 </template>
 
 <script>
+import { Toolbar, Search } from '@syncfusion/ej2-vue-grids';
+
 export default {
 	name: 'ListView',
     data() {
 		return {
-			listData: []
+			listData: [],
+			toolbarOptions: ['Search']
 		}
 	},
 	beforeCreate() {
@@ -21,6 +24,9 @@ export default {
 			.catch(error => {
 				console.log( error );
 			});
+	},
+	provide: {
+		grid: [Toolbar, Search]
 	}
 }
 </script>
