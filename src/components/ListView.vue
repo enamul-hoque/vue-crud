@@ -16,7 +16,7 @@ export default {
 		}
 	},
 	beforeCreate() {
-		fetch('http://localhost/vue-crud/api/list.php')
+		fetch('./api/list.php')
 			.then(res => res.json())
 			.then(data => {
 				this.listData = data.data.rows;
