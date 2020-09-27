@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vue CRUD</title>
+    <link rel=stylesheet href=https://cdn.syncfusion.com/ej2/material.css>
 </head>
 <body>
+    <div id="app"></div>
     
+    <script type="text/javascript" src="dist/js/app.js"></script></body>
 </body>
 </html>
