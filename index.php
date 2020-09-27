@@ -9,6 +9,6 @@
 <body>
     <div id="app"></div>
     
-    <script type="text/javascript" src="dist/js/app.js"></script></body>
+    <script src="dist/js/app.js"></script>
 </body>
 </html>
