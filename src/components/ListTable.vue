@@ -42,7 +42,7 @@ export default {
 
             for (const columnName in this.columnsData.headers[0]) {
                 if ( !this.columnsData.headers[0][ columnName ].hidden ) {
-                    newObj[columnName] = !this.columnsData.headers[0][ columnName ];
+                    newObj[columnName] = this.columnsData.headers[0][ columnName ];
                 }
             }
 
