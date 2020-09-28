@@ -1,5 +1,5 @@
 <template>
   <div class="create-page">
-    <h1>This is an create page</h1>
+    <h2 style="text-align: center;">Under Construction...</h2>
   </div>
 </template>
