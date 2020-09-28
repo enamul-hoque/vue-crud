@@ -2,7 +2,7 @@
   <div class="list-table">
     <ejs-grid :dataSource="listData" :toolbar='toolbarOptions'>
 		<e-columns>
-			<e-column :field='key' :headerText='item.title' v-for="(item, key, indx) in columnsTitles" :key="indx"></e-column>
+			<e-column :field='key' :headerText='item.title' v-for="(item, key, indx) in columnsTitles" :key="indx" v-if="item.hidden === false"></e-column>
 		</e-columns>
 	</ejs-grid>
   </div>
