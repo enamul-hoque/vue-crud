@@ -1,26 +1,26 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import Create from "../views/Create.vue";
-import Update from "../views/Update.vue";
+import ListPage from "../views/ListPage";
+import CreatePage from "../views/CreatePage";
+import UpdatePage from "../views/UpdatePage";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home
+    name: "ListPage",
+    component: ListPage
   },
   {
     path: "/create",
-    name: "Create",
-    component: Create
+    name: "CreatePage",
+    component: CreatePage
   },
   {
     path: "/update",
-    name: "Update",
-    component: Update
+    name: "UpdatePage",
+    component: UpdatePage
   }
 ];
 
