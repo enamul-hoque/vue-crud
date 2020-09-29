@@ -1,6 +1,6 @@
 <template>
   <div class="list-table">
-    <ejs-grid :dataSource="listData" :toolbar="toolbarOptions">
+    <ejs-grid :dataSource="listData" :toolbar="toolbarOptions" :allowRowDragAndDrop="true" :rowDrop="handleChange">
         <e-columns>
             <e-column :field="key" :headerText="item.title" v-for="(item, key, indx) in columnsTitles" :key="indx"></e-column>
         </e-columns>
@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { Toolbar, Search } from '@syncfusion/ej2-vue-grids';
+import { Toolbar, Search, RowDD } from '@syncfusion/ej2-vue-grids';
 
 export default {
     name: "ListTable",
@@ -32,7 +32,7 @@ export default {
             });
     },
     provide: {
-        grid: [Toolbar, Search]
+        grid: [Toolbar, Search, RowDD]
     },
     computed: {
         columnsTitles() {
@@ -47,6 +47,38 @@ export default {
             }
 
             return newObj;
+        }
+    },
+    methods: {
+        handleChange(row) {
+            // build the id list
+            let newIDOrder = {},
+                i = 1;
+
+            this.columnsData.rows.forEach(item => {
+                newIDOrder[ item.id ] = i;
+                i++;
+            });
+            
+            // new formdata object
+			const formData = new FormData();
+            formData.append('data', JSON.stringify(newIDOrder));
+            
+            // Send the id list
+            fetch("./api/reorder.php", {
+                method: 'POST',
+                body: formData
+            })
+                .then(res => res.json())
+                .then(data => {
+                    // status message show in the console
+                    data.messages.forEach(el => {
+                        console.log( 'Redorder Rows: ' + el );
+                    });
+                })
+                .catch(error => {
+                    console.log( error );
+                });
         }
     }
 };
