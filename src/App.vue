@@ -26,7 +26,7 @@ body {
 }
 
 #nav {
-	padding: 30px;
+	padding: 30px 30px 60px;
 	text-align: center;
 	color: #2c3e50;
 }
@@ -62,5 +62,90 @@ body {
 
 .noty_type__success {
 	background-color: #42b983 !important;
+}
+
+/** Form Wrap **/
+.form-wrap {
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+/** Form Field **/
+.field-item {
+	display: block;
+	margin-bottom: 40px;
+	position: relative;
+	z-index: 0;
+}
+
+.field-item > input {
+	display: block;
+	width: 100%;
+    height: 32px;
+    padding: 0;
+	color: rgba(0, 0, 0, 0.87);
+	border-style: solid;
+	border-width: 0 0 1px;
+	border-color: rgba(0, 0, 0, 0.42);
+	font-family: 'Roboto', sans-serif;
+	font-size: 14px;
+	line-height: 18px;
+	font-weight: 400;
+	outline: 0;
+}
+
+.field-item > .field-label {
+    display: block;
+    position: absolute;
+    top: 8px;
+	left: 0;
+	right: 0;
+    color: rgba(0, 0, 0, 0.84);
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+	line-height: 18px;
+	cursor: pointer;
+	transition: all .25s ease-in-out;
+}
+
+.field-item input:focus + .field-label {
+    top: -16px;
+    font-size: 16px;
+}
+
+.field-item > .field-border {
+	display: block;
+	position: absolute;
+	left: 50%;
+	right: 50%;
+	bottom: -1px;
+	height: 2px;
+	background-color: #e3165b;
+	opacity: 0;
+	transition: left .25s ease-out, right .25s ease-out, opacity .25s ease-in-out;
+}
+
+.field-item input:focus ~ .field-border {
+	left: 0;
+	right: 0;
+	opacity: 1;
+}
+
+.form-submit {
+    display: block;
+    margin: 0 auto;
+    padding: 12px 30px;
+    color: #fff;
+    background-color: #0378d5;
+    border-width: 0;
+	border-radius: 5px;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+    transition: background-color .25s ease-in-out;
+    cursor: pointer;
+    outline: 0;
+}
+
+.form-submit:hover {
+    background-color: #036dc2;
 }
 </style>
