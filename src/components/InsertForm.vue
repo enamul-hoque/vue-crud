@@ -2,9 +2,18 @@
     <div class="insert-form">
         <form id="insertForm" class="form-wrap" action="#" method="post" @submit.prevent="handleSubmit">
             <div class="field-item" v-for="(item, name, indx) in fields" :key="indx" v-show="item.type !== 'hidden'">
-                <div class="field-inner" v-if="item.type === 'select'">
-                    <select>
-                        <option>test!</option>
+                <div class="field-inner" v-if="item.type === 'radio'">
+                    <div class="field-radio" v-for="(option, indx3) in item.options" :key="indx3">
+                        <input type="radio" :name="option.key">
+                        <!-- <input :name="name" :type="item.type" :required="item.required" v-bind="item.html_attr" :value="item.value" :readonly="item.readonly" :data-validate="item.validate" autocomplete="off"> -->
+
+                        <span class="field-label">{{ option.label }}</span>
+                    </div>
+                </div>
+
+                <div class="field-inner" v-else-if="item.type === 'select'">
+                    <select v-bind="item.html_attr" :readonly="item.readonly" :data-validate="item.validate" :required="item.required">
+                        <option v-for="(option, indx2) in item.options" :key="indx2" :value="option.key">{{option.label}}</option>
                     </select>
                 </div>
                 

@@ -96,6 +96,10 @@ body {
 	outline: 0;
 }
 
+.field-item select {
+	cursor: pointer;
+}
+
 .field-item .field-label {
     display: block;
     position: absolute;
