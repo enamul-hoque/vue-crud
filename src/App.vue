@@ -78,7 +78,8 @@ body {
 	z-index: 0;
 }
 
-.field-item > input {
+.field-item input,
+.field-item select {
 	display: block;
 	width: 100%;
     height: 32px;
@@ -87,6 +88,7 @@ body {
 	border-style: solid;
 	border-width: 0 0 1px;
 	border-color: rgba(0, 0, 0, 0.42);
+	background-color: transparent;
 	font-family: 'Roboto', sans-serif;
 	font-size: 14px;
 	line-height: 18px;
@@ -94,7 +96,7 @@ body {
 	outline: 0;
 }
 
-.field-item > .field-label {
+.field-item .field-label {
     display: block;
     position: absolute;
     top: 8px;
@@ -106,14 +108,16 @@ body {
 	line-height: 18px;
 	cursor: pointer;
 	transition: all .25s ease-in-out;
+	z-index: -1;
 }
 
-.field-item input:focus + .field-label {
+.field-item input:not([type="radio"]):focus ~ .field-label,
+.field-item select:not([type="radio"]):focus ~ .field-label {
     top: -16px;
     font-size: 16px;
 }
 
-.field-item > .field-border {
+.field-item .field-border {
 	display: block;
 	position: absolute;
 	left: 50%;
@@ -125,7 +129,8 @@ body {
 	transition: left .25s ease-out, right .25s ease-out, opacity .25s ease-in-out;
 }
 
-.field-item input:focus ~ .field-border {
+.field-item input:not([type="radio"]):focus ~ .field-border,
+.field-item select:not([type="radio"]):focus ~ .field-border {
 	left: 0;
 	right: 0;
 	opacity: 1;
@@ -147,5 +152,15 @@ body {
 
 .form-submit:hover {
     background-color: #036dc2;
+}
+
+.field-item input[type="radio"] {
+    display: inline-block;
+    width: auto;
+    height: auto;
+    margin: 31px 0 0;
+}
+.field-item input[type="radio"] ~ .field-label {
+    top: 8px;
 }
 </style>
