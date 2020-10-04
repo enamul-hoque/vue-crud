@@ -2,23 +2,26 @@
     <div class="insert-form">
         <form id="insertForm" class="form-wrap" action="#" method="post" @submit.prevent="handleSubmit">
             <div class="field-item" v-for="(item, name, indx) in fields" :key="indx" v-show="item.type !== 'hidden'">
-                <div class="field-inner" v-if="item.type === 'radio'">
-                    <div class="field-radio" v-for="(option, indx3) in item.options" :key="indx3">
-                        <input type="radio" :name="option.key">
-                        <!-- <input :name="name" :type="item.type" :required="item.required" v-bind="item.html_attr" :value="item.value" :readonly="item.readonly" :data-validate="item.validate" autocomplete="off"> -->
+                <div class="field-inner is-active" v-if="item.type === 'radio'">
+                    <span class="field-label">{{ item.title }}</span>
 
-                        <span class="field-label">{{ option.label }}</span>
+                    <div class="field-radio" v-for="(option, indx3) in item.options" :key="indx3">
+                        <input :id="name + '_' + indx3" type="radio" :name="name" :value="option.key" v-model="formInputs[name]" v-bind="item.html_attr" :readonly="item.readonly" :data-validate="item.validate" :required="item.required">
+
+                        <label :for="name + '_' + indx3" class="field-radio-label">{{ option.label }}</label>
                     </div>
                 </div>
 
-                <div class="field-inner" v-else-if="item.type === 'select'">
-                    <select v-bind="item.html_attr" :readonly="item.readonly" :data-validate="item.validate" :required="item.required">
+                <div class="field-inner is-active" v-else-if="item.type === 'select'">
+                    <span class="field-label">{{ item.title }}</span>
+
+                    <select v-bind="item.html_attr" :readonly="item.readonly" :data-validate="item.validate" :required="item.required" v-model="formInputs[ name ]">
                         <option v-for="(option, indx2) in item.options" :key="indx2" :value="option.key">{{option.label}}</option>
                     </select>
                 </div>
                 
-                <div class="field-inner" v-else>
-                    <input :name="name" :type="item.type" :required="item.required" v-bind="item.html_attr" :value="item.value" :readonly="item.readonly" :data-validate="item.validate" autocomplete="off">
+                <div class="field-inner" v-else :class="{'is-focused': formInputs[ name ].length}">
+                    <input :name="name" :type="item.type" :required="item.required" v-bind="item.html_attr" v-model="formInputs[ name ]" :readonly="item.readonly" :data-validate="item.validate" autocomplete="off" :class="'is-valid-' + validInputs[ name ]">
 
                     <span class="field-label">{{ item.title }}</span>
                     <span class="field-border"></span>
@@ -36,23 +39,47 @@ export default {
     data() {
         return {
             fields: [],
-            formInputs: {}
+            formInputs: {},
+            validInputs: {}
         }
     },
     beforeCreate() {
         fetch("./api/get_form.php")
             .then(res => res.json())
             .then(res_data => {
-                this.fields = res_data.data.fields[0];
-                console.log( this.fields );
+                const fields = res_data.data.fields[0];
+                this.fields = fields;
+
+                for (let field in fields) {
+                    this.$set(this.formInputs, field, fields[ field ].default || fields[ field ].value);
+                    this.$set(this.validInputs, field, '');
+                }
             }).catch(e => this.$noty.error( String(e) ));
+    },
+    beforeUpdate() {
+        for (let field in this.fields) {
+            if ( 'validate' in this.fields[ field ] ) {
+                console.log(this.fields[ field ].validate);
+                switch (this.fields[ field ].validate) {
+                    case 'only_letters':
+                        this.validInputs[ field ] = this.formInputs[ field ].match(/^[A-Za-z]+$/) ? 'yes' : 'no';
+                        break;
+                        
+                    case 'integer':
+                        this.validInputs[ field ] = Number.isInteger( this.formInputs[ field ] ) ? 'yes' : 'no';
+                        break;
+                        
+                    case 'only_letter_number|max:100':
+                        break;
+                }
+            }
+        }
     },
     methods: {
         handleSubmit() {
             // new formdata object
 			const formData = new FormData();
-            // formData.append('data', JSON.stringify(formInputs));
-            console.log( formData );
+            formData.append('data', JSON.stringify(this.formInputs));
 
             // submit the data
             fetch("./api/submit_form.php", {

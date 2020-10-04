@@ -116,9 +116,15 @@ body {
 }
 
 .field-item input:not([type="radio"]):focus ~ .field-label,
-.field-item select:not([type="radio"]):focus ~ .field-label {
+.field-item select:focus ~ .field-label,
+.field-inner.is-focused .field-label,
+.field-inner.is-active .field-label {
     top: -16px;
     font-size: 16px;
+}
+
+.field-inner.is-active {
+    margin-top: 65px;
 }
 
 .field-item .field-border {
@@ -128,16 +134,21 @@ body {
 	right: 50%;
 	bottom: -1px;
 	height: 2px;
-	background-color: #e3165b;
+	background-color: #42b983;
 	opacity: 0;
 	transition: left .25s ease-out, right .25s ease-out, opacity .25s ease-in-out;
 }
 
 .field-item input:not([type="radio"]):focus ~ .field-border,
-.field-item select:not([type="radio"]):focus ~ .field-border {
+.field-item select:focus ~ .field-border,
+.field-item .is-valid-yes ~ .field-border {
 	left: 0;
 	right: 0;
 	opacity: 1;
+}
+
+.field-item .is-valid-no ~ .field-border {
+	background-color: #e3165b;
 }
 
 .form-submit {
@@ -145,7 +156,7 @@ body {
     margin: 0 auto;
     padding: 12px 30px;
     color: #fff;
-    background-color: #0378d5;
+    background-color: #42b983;
     border-width: 0;
 	border-radius: 5px;
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
@@ -155,16 +166,24 @@ body {
 }
 
 .form-submit:hover {
-    background-color: #036dc2;
+    background-color: #389c6f;
 }
 
-.field-item input[type="radio"] {
+.field-radio {
+	display: inline-flex;
+    align-items: center;
+    margin-right: 15px;
+}
+.field-radio > input {
     display: inline-block;
     width: auto;
     height: auto;
-    margin: 31px 0 0;
+    margin: 10px 5px 0 0;
+	cursor: pointer;
 }
-.field-item input[type="radio"] ~ .field-label {
-    top: 8px;
+.field-radio-label {
+	display: inline-block;
+	margin-top: 12px;
+	cursor: pointer;
 }
 </style>
