@@ -51,7 +51,6 @@ export default {
     },
     methods: {
         handleCommand(e) {
-            console.log( e.rowData.id );
             this.$router.push({path: 'update', query: { id: e.rowData.id }});
         },
         handleChange(row) {

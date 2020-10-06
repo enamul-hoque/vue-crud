@@ -103,7 +103,6 @@ export default {
                 for (let i = 0; i < exp.length; i++) {
                     if ( exp[i].match('only_letters') ) {
                         this.validInputs[ field ] = this.formInputs[ field ].match(/^[A-Za-z]+$/) ? 'yes' : 'no';
-                        console.log( 'Test!' );
                     }
                     
                     if ( exp[i].match('integer') ) {
