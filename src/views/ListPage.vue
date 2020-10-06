@@ -1,5 +1,9 @@
 <template>
 	<div class="list-page">
+	    <div class="title">
+	        <h2>Entry List</h2>
+	    </div>
+	    
 		<ListTable />
 	</div>
 </template>

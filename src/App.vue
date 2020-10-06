@@ -194,6 +194,53 @@ body {
 	cursor: pointer;
 }
 
+.repeater-group {
+	display: flex;
+	flex-wrap: wrap;
+	position: relative;
+	padding-top: 30px;
+	margin-left: -10px;
+	margin-right: -10px;
+	z-index: 0;
+}
+
+.repeater-group:not(:last-child) {
+	padding-bottom: 10px;
+}
+
+.repeater-field {
+	position: relative;
+	flex: 0 0 calc(50% - 20px);
+	max-width: calc(50% - 20px);
+	margin: 0 10px;
+	z-index: 0;
+}
+
+.repeater-action {
+    position: absolute;
+    top: 35px;
+    right: -20px;
+    width: 16px;
+    height: 16px;
+    font-size: 18px;
+    line-height: 17px;
+    color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.repeater-add {
+    background-color: #42b983;
+}
+
+.repeater-remove {
+    right: -45px;
+    background-color: #e3165b;
+    line-height: 12px;
+}
+
 .title {
 	padding-bottom: 60px;
     text-align: center;

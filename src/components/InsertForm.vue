@@ -4,6 +4,18 @@
             <div class="field-item" v-for="(item, name, indx) in fields" :key="indx" v-show="item.type !== 'hidden'">
                 <div class="field-inner is-active" v-if="item.type === 'repeater'">
                     <span class="field-label">{{ item.title }}</span>
+
+                    <div class="repeater-group" v-for="(r_group, rg_indx) in item.repeater_fields" :key="rg_indx">
+                        <div class="repeater-field" v-for="(r_item, r_name, r_indx) in r_group" :key="r_indx">
+                            <input :type="r_item.type" :name="name +'_' + rg_indx +'_' + r_name" v-model="formInputs[ name +'_' + rg_indx +'_' + r_name ]" :data-validate="r_item.validate" :required="r_item.required" :class="'is-valid-' + validInputs[ name +'_' + rg_indx +'_' + r_name ]">
+
+                            <span class="field-label">{{ r_item.title }}</span>
+                            <span class="field-border"></span>
+                        </div>
+
+                        <span class="repeater-action repeater-add" @click="addRepeater( name, rg_indx )">+</span>
+                        <span class="repeater-action repeater-remove" @click="removeRepeater( name, rg_indx )" v-show="item.repeater_fields.length > 1">-</span>
+                    </div>
                 </div>
 
                 <div class="field-inner is-active" v-else-if="item.type === 'radio'">
@@ -31,6 +43,8 @@
                     <span class="field-border"></span>
                 </div>
                 
+                <div v-else-if="item.virtual_type === 'hidden'"></div>
+                
                 <div class="field-inner" v-else :class="{'is-focused': formInputs[ name ].length}">
                     <input :name="name" :type="item.type" :required="item.required" v-bind="item.html_attr" v-model="formInputs[ name ]" :readonly="item.readonly" :data-validate="item.validate" autocomplete="off" :class="'is-valid-' + validInputs[ name ]">
 
@@ -49,7 +63,7 @@ export default {
     name: "InsertForm",
     data() {
         return {
-            fields: [],
+            fields: {},
             formInputs: {},
             validInputs: {}
         }
@@ -66,17 +80,30 @@ export default {
                 for (let field in fields) {
                     this.$set(this.formInputs, field, fields[ field ].default || fields[ field ].value);
                     this.$set(this.validInputs, field, '');
+
+                    if ( fields[ field ].repeater_fields ) {
+                        for (let rg = 0; rg < fields[ field ].repeater_fields.length; rg++) {
+                            for (let ri in fields[ field ].repeater_fields[rg] ) {
+                                fields[ field ].repeater_fields[rg][ri]['virtual_type'] = 'hidden';
+                                this.fields[ field + '_'+ rg +'_'+ ri ] = fields[ field ].repeater_fields[rg][ri];
+
+                                this.$set(this.formInputs, (field + '_'+ rg +'_'+ ri), '');
+                                this.$set(this.validInputs, (field + '_'+ rg +'_'+ ri), '');
+                            }
+                        }
+                    }
                 }
             }).catch(e => this.$noty.error( String(e) ));
     },
     beforeUpdate() {
         for (let field in this.fields) {
-            if ( 'validate' in this.fields[ field ] ) {
+            if ( 'validate' in this.fields[ field ]  ) {
                 let exp = this.fields[ field ].validate.split('|');
                 
                 for (let i = 0; i < exp.length; i++) {
                     if ( exp[i].match('only_letters') ) {
                         this.validInputs[ field ] = this.formInputs[ field ].match(/^[A-Za-z]+$/) ? 'yes' : 'no';
+                        console.log( 'Test!' );
                     }
                     
                     if ( exp[i].match('integer') ) {
@@ -103,6 +130,14 @@ export default {
         }
     },
     methods: {
+        removeRepeater(name, indx) {
+            this.fields[ name ].repeater_fields.splice(indx, 1);
+        },
+
+        addRepeater(name, indx) {
+            this.fields[ name ].repeater_fields.splice(indx, 0, this.fields[ name ].repeater_fields[0]);
+        },
+
         handleSubmit() {
             // new formdata object
             const formData = new FormData();

@@ -1,9 +1,5 @@
 <template>
   <div class="list-table">
-    <div class="title">
-        <h2>Entry List</h2>
-    </div>
-    
     <ejs-grid :dataSource="listData" :commandClick="handleCommand" :toolbar="toolbarOptions" :allowRowDragAndDrop="true" :rowDrop="handleChange" :allowSorting="true" :showColumnChooser="true" :allowFiltering="true">
         <e-columns>
             <e-column :field="key" :headerText="item.title" v-for="(item, key, indx) in columnsTitles" :key="indx" :allowSorting="item.sortable" :allowFiltering="item.searchable"></e-column>

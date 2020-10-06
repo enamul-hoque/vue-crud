@@ -1,7 +1,7 @@
 <template>
     <div class="create-page">
         <div class="title">
-          <h2>Update Entry</h2>
+          <h2>Create Entry</h2>
         </div>
 
         <InsertForm />
