@@ -2,8 +2,7 @@
 	<div id="app">
 		<div id="nav">
 			<router-link to="/">List</router-link> |
-			<router-link to="/create">Create</router-link> |
-			<router-link to="/update">Update</router-link>
+			<router-link to="/create">Create</router-link>
 		</div>
 
 		<router-view />
@@ -79,6 +78,7 @@ body {
 }
 
 .field-item input,
+.field-item textarea,
 .field-item select {
 	display: block;
 	width: 100%;
@@ -94,6 +94,11 @@ body {
 	line-height: 18px;
 	font-weight: 400;
 	outline: 0;
+}
+
+.field-item textarea {
+	min-height: 120px;
+	padding-top: 10px;
 }
 
 .field-item select {
@@ -116,6 +121,7 @@ body {
 }
 
 .field-item input:not([type="radio"]):focus ~ .field-label,
+.field-item textarea:not([type="radio"]):focus ~ .field-label,
 .field-item select:focus ~ .field-label,
 .field-inner.is-focused .field-label,
 .field-inner.is-active .field-label {
@@ -140,6 +146,7 @@ body {
 }
 
 .field-item input:not([type="radio"]):focus ~ .field-border,
+.field-item textarea:not([type="radio"]):focus ~ .field-border,
 .field-item select:focus ~ .field-border,
 .field-item .is-valid-yes ~ .field-border {
 	left: 0;
@@ -185,5 +192,17 @@ body {
 	display: inline-block;
 	margin-top: 12px;
 	cursor: pointer;
+}
+
+.title {
+	padding-bottom: 60px;
+    text-align: center;
+}
+.title > h2 {
+    display: inline-flex;
+	margin-top: 0;
+	margin-bottom: 0;
+    border-bottom: 2px solid #42b983;
+    text-align: center;
 }
 </style>

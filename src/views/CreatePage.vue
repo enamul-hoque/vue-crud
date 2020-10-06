@@ -1,5 +1,9 @@
 <template>
     <div class="create-page">
+        <div class="title">
+          <h2>Update Entry</h2>
+        </div>
+
         <InsertForm />
     </div>
 </template>

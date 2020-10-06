@@ -1,15 +1,20 @@
 <template>
   <div class="list-table">
-    <ejs-grid :dataSource="listData" :toolbar="toolbarOptions" :allowRowDragAndDrop="true" :rowDrop="handleChange" :allowSorting="true" :showColumnChooser="true" :allowFiltering="true">
+    <div class="title">
+        <h2>Entry List</h2>
+    </div>
+    
+    <ejs-grid :dataSource="listData" :commandClick="handleCommand" :toolbar="toolbarOptions" :allowRowDragAndDrop="true" :rowDrop="handleChange" :allowSorting="true" :showColumnChooser="true" :allowFiltering="true">
         <e-columns>
             <e-column :field="key" :headerText="item.title" v-for="(item, key, indx) in columnsTitles" :key="indx" :allowSorting="item.sortable" :allowFiltering="item.searchable"></e-column>
+            <e-column headerText='Update' width=120 :commands='commands'></e-column>
         </e-columns>
     </ejs-grid>
   </div>
 </template>
 
 <script>
-import { Toolbar, RowDD, Sort, ColumnChooser, Filter } from '@syncfusion/ej2-vue-grids';
+import { Toolbar, RowDD, Sort, ColumnChooser, Filter, CommandColumn } from '@syncfusion/ej2-vue-grids';
 
 export default {
     name: "ListTable",
@@ -18,8 +23,16 @@ export default {
             listData: [],
             columnsTitles: {},
             columnsData: {},
-            toolbarOptions: ["ColumnChooser"]
+            toolbarOptions: ["ColumnChooser"],
+            commands: [
+                {
+                    type: 'Edit', buttonOption: { cssClass: 'e-flat', iconCss: 'e-edit e-icons' }
+                }
+            ]
         }
+    },
+    provide: {
+        grid: [Toolbar, RowDD, Sort, ColumnChooser, Filter, CommandColumn]
     },
     beforeCreate() {
         fetch("./api/list.php")
@@ -40,10 +53,11 @@ export default {
                 }
             }).catch(e => this.$noty.error( String(e) ));
     },
-    provide: {
-        grid: [Toolbar, RowDD, Sort, ColumnChooser, Filter]
-    },
     methods: {
+        handleCommand(e) {
+            console.log( e.rowData.id );
+            this.$router.push({path: 'update', query: { id: e.rowData.id }});
+        },
         handleChange(row) {
             // build the id list
             let newIDOrder = {},
