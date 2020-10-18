@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vue CRUD</title>
     <link rel="icon" href="dist/favicon.ico">
-    <link rel="stylesheet" href="http://localhost:8080/assets/css/theme.css">
-    <link rel="stylesheet" href="http://localhost:8080/css/app.css">
+    <link rel="stylesheet" href="http://localhost/vue-crud/assets/css/theme.css">
+    <link rel="stylesheet" href="http://localhost/vue-crud/css/app.css">
 </head>
 <body>
     <div id="app"></div>
@@ -17,6 +17,6 @@
     		get_form: 'http://localhost/vue-crud/api/get_form.php'
     	};
     </script>
-    <script src="http://localhost:8080/js/app.js"></script>
+    <script src="http://localhost/vue-crud/js/app.js"></script>
 </body>
 </html>
