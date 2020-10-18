@@ -69,10 +69,17 @@ export default {
         }
     },
     beforeCreate() {
-        const formUrl = typeof this.$route.query.id === "undefined" ? "./api/get_form.php" : "./api/get_form.php?id=" + this.$route.query.id;
+        const formUrl = typeof this.$route.query.id === "undefined" ? window.api.get_form : window.api.get_form + "?id=" + this.$route.query.id;
         
         fetch(formUrl)
-            .then(res => res.json())
+            .then(res => {
+                if ( res.status === 404 ) {
+                    this.$noty.error( 'URL Not Found.' );
+                    return;
+                }
+
+                return res.json();
+            })
             .then(res_data => {
                 const fields = res_data.data.fields[0];
                 this.fields = fields;

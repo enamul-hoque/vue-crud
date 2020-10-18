@@ -31,8 +31,17 @@ export default {
         grid: [Toolbar, RowDD, Sort, ColumnChooser, Filter, CommandColumn]
     },
     beforeCreate() {
-        fetch("./api/list.php")
-            .then(res => res.json())
+        const listUrl = window.api.list;
+
+        fetch(listUrl)
+            .then(res => {
+                if ( res.status === 404 ) {
+                    this.$noty.error( 'URL Not Found.' );
+                    return;
+                }
+
+                return res.json();
+            })
             .then(res_data => {
                 this.columnsData = res_data.data;
                 this.listData = res_data.data.rows;
